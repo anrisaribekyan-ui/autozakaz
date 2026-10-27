@@ -116,6 +116,27 @@ class LibertiClient:
                            url=href.group(1) if href else "", opt=_num(opt.group(1)) if opt else None)
         return None
 
+    async def search(self, query: str, limit: int = 8) -> list[LibItem]:
+        """Товары по свободному тексту (для «Закупок» CRM): та же выдача /search/, без сверки артикула."""
+        await self.login()
+        r = await self._get("/search/", params={"q": query})
+        self._grab_sessid(r.text)
+        out: list[LibItem] = []
+        for blk in re.split(r'class="product-list-item product-list-item--table"\s+data-id="', r.text)[1:]:
+            pid = _num(blk[:15])
+            if not pid:
+                continue
+            art = re.search(r"Артикул:\s*([0-9A-Za-zА-Яа-я-]+)", blk)
+            href = re.search(r'product-list-item__name-link"\s*href="([^"]+)"', blk)
+            name = re.search(r'product-list-item__name-link"[^>]*>\s*<span[^>]*>(.*?)</span>', blk, re.S)
+            opt = re.search(r'price--main">\s*<div class="product-list-item__price-value">\s*([\d\s]+)', blk)
+            out.append(LibItem(id=pid, code=art.group(1).strip() if art else "",
+                               name=_html.unescape(name.group(1)).strip() if name else str(pid),
+                               url=href.group(1) if href else "", opt=_num(opt.group(1)) if opt else None))
+            if len(out) >= limit:
+                break
+        return out
+
     async def mitino(self, item: LibItem) -> LibItem:
         """Остаток на складе «Либерти - Митино» и оптовая цена с карточки."""
         if not item.url:

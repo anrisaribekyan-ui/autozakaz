@@ -1,0 +1,15 @@
+[Unit]
+Description=Закупки CRM: оформление заказов у Moba / Master Mobile / Liberti
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=anri
+WorkingDirectory=/home/anri/moba
+ExecStart=/home/anri/moba/venv/bin/python zakupka_api.py
+Restart=always
+RestartSec=10
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
