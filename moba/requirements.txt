@@ -1,0 +1,8 @@
+aiogram>=3.4
+aiosqlite
+httpx
+playwright
+python-dotenv
+beautifulsoup4
+lxml
+aiohttp-socks

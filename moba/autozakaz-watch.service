@@ -1,0 +1,10 @@
+[Unit]
+Description=Сторож заказов moba (отмены)
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=anri
+WorkingDirectory=/home/anri/moba
+ExecStart=/home/anri/moba/venv/bin/python moba_watch.py
+TimeoutStartSec=600

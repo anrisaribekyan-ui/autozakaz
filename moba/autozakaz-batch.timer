@@ -1,0 +1,10 @@
+[Unit]
+Description=Закупка пачкой в 10:00 и 15:00 по Москве
+
+[Timer]
+OnCalendar=*-*-* 10:00:00 Europe/Moscow
+OnCalendar=*-*-* 15:00:00 Europe/Moscow
+Persistent=false
+
+[Install]
+WantedBy=timers.target

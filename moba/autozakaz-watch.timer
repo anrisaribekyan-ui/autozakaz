@@ -1,0 +1,8 @@
+[Unit]
+Description=Сторож заказов moba: каждый час с 9 до 21
+
+[Timer]
+OnCalendar=*-*-* 09..21:20:00 Europe/Moscow
+
+[Install]
+WantedBy=timers.target

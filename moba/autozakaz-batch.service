@@ -1,0 +1,11 @@
+[Unit]
+Description=Автозаказ: закупка пачкой (moba Митино)
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=anri
+WorkingDirectory=/home/anri/moba
+ExecStart=/home/anri/moba/venv/bin/python zakaz_batch.py --live --owner anri
+ExecStart=/home/anri/moba/venv/bin/python zakaz_batch.py --live --owner gor
+TimeoutStartSec=1800

@@ -1,0 +1,11 @@
+venv/
+.venv/
+__pycache__/
+.env
+*.env
+data/
+debug/
+*.tgz
+*.db
+logs/
+*.log*

@@ -1,0 +1,15 @@
+[Unit]
+Description=Автозаказ moba по заказам WB
+After=network-online.target tg-proxy.service
+Wants=network-online.target
+
+[Service]
+User=anri
+WorkingDirectory=/home/anri/moba
+ExecStart=/home/anri/moba/venv/bin/python app.py
+Restart=always
+RestartSec=15
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
